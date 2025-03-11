@@ -1,9 +1,9 @@
 {
   "name": "momodal-library",
-  "version": "0.0.1",
-  "main": "./dist/empty.cjs.js",
-  "module": "./dist/empty.es.js",
-  "types": "./dist/Empty.d.ts",
+  "version": "0.0.3",
+  "main": "./dist/momodal-library.cjs.js",
+  "module": "./dist/momodal-library.es.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],

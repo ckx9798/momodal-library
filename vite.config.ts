@@ -8,10 +8,10 @@ export default defineConfig({
   plugins: [react(), dts({ insertTypesEntry: true })],
   build: {
     lib: {
-      entry: "src/Empty.tsx",
-      name: "Empty",
+      entry: "src/index.ts",
+      name: "momodal-library",
       formats: ["es", "cjs"],
-      fileName: (format) => `empty.${format}.js`,
+      fileName: (format) => `momodal-library.${format}.js`,
     },
     rollupOptions: {
       external: ["react", "react-dom"],

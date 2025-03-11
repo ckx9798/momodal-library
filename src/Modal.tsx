@@ -44,3 +44,5 @@ const styles = {
     marginTop: "15px",
   },
 };
+
+export default Modal;
