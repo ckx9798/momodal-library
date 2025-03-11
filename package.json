@@ -1,0 +1,23 @@
+{
+  "name": "momodal-library",
+  "version": "0.0.1",
+  "main": "./dist/empty.cjs.js",
+  "module": "./dist/empty.es.js",
+  "types": "./dist/Empty.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.0.0",
+    "vite": "^6.2.1",
+    "vite-plugin-dts": "^3.6.3"
+  }
+}
