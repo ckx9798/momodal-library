@@ -1,6 +1,6 @@
 {
   "name": "momodal-library",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./dist/momodal-library.cjs.js",
   "module": "./dist/momodal-library.es.js",
   "types": "./dist/index.d.ts",

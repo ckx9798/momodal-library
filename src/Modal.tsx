@@ -9,9 +9,15 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, children, onClose }: ModalProps) => {
+  if (!isOpen) return null;
   return (
     <div style={styles.overlay}>
-      <div style={styles.modal}>
+      <div
+        style={styles.modal}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         {children}
         <button onClick={onClose} style={styles.closeButton}>
           닫기
