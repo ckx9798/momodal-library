@@ -6,17 +6,34 @@ interface ModalProps {
   isOpen: boolean;
   children: ReactNode;
   onClose: () => void;
+  width?: number;
+  height?: number;
+  padding?: number;
+  borderRadius?: number;
 }
 
-const Modal = ({ isOpen, children, onClose }: ModalProps) => {
+const Modal = ({
+  isOpen,
+  children,
+  onClose,
+  width = 500,
+  height = 300,
+  padding = 20,
+  borderRadius = 8,
+}: ModalProps) => {
   if (!isOpen) return null;
+
   return (
-    <div style={styles.overlay}>
+    <div style={styles.overlay} onClick={onClose}>
       <div
-        style={styles.modal}
-        onClick={(e) => {
-          e.stopPropagation();
+        style={{
+          ...styles.modal,
+          width: `${width}px`,
+          height: `${height}px`,
+          padding: `${padding}px`,
+          borderRadius: `${borderRadius}px`,
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         {children}
         <button onClick={onClose} style={styles.closeButton}>
@@ -41,9 +58,6 @@ const styles = {
   },
   modal: {
     background: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    width: "300px",
     textAlign: "center" as const,
   },
   closeButton: {
