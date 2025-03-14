@@ -68,6 +68,7 @@ const styles = {
     padding: "20px",
   },
   content: {
+    width: "100%",
     flexGrow: 1,
     maxHeight: "70vh",
     overflowY: "auto" as const,
