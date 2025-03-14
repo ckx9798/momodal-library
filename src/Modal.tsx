@@ -7,7 +7,6 @@ interface ModalProps {
   children: ReactNode;
   onClose: () => void;
   width?: number;
-  height?: number;
   padding?: number;
   borderRadius?: number;
 }
@@ -16,8 +15,7 @@ const Modal = ({
   isOpen,
   children,
   onClose,
-  width = 500,
-  height = 300,
+  width = 400,
   padding = 20,
   borderRadius = 8,
 }: ModalProps) => {
@@ -29,13 +27,12 @@ const Modal = ({
         style={{
           ...styles.modal,
           width: `${width}px`,
-          height: `${height}px`,
           padding: `${padding}px`,
           borderRadius: `${borderRadius}px`,
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {children}
+        <div style={styles.content}>{children}</div>
         <button onClick={onClose} style={styles.closeButton}>
           닫기
         </button>
@@ -55,13 +52,30 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    padding: "20px",
   },
   modal: {
     background: "#fff",
     textAlign: "center" as const,
+    minHeight: "150px",
+    maxHeight: "80vh",
+    overflowY: "auto" as const,
+
+    display: "flex",
+    flexDirection: "column" as const,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+  },
+  content: {
+    flexGrow: 1,
+    maxHeight: "70vh",
+    overflowY: "auto" as const,
+    paddingBottom: "10px",
   },
   closeButton: {
     marginTop: "15px",
+    cursor: "pointer",
   },
 };
 
