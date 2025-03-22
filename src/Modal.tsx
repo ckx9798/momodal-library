@@ -9,6 +9,7 @@ interface ModalProps {
   width?: number;
   padding?: number;
   borderRadius?: number;
+  showCloseButton?: boolean;
 }
 
 const Modal = ({
@@ -18,6 +19,7 @@ const Modal = ({
   width = 400,
   padding = 20,
   borderRadius = 8,
+  showCloseButton = true,
 }: ModalProps) => {
   if (!isOpen) return null;
 
@@ -33,9 +35,11 @@ const Modal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div style={styles.content}>{children}</div>
-        <button onClick={onClose} style={styles.closeButton}>
-          닫기
-        </button>
+        {showCloseButton && (
+          <button onClick={onClose} style={styles.closeButton}>
+            닫기
+          </button>
+        )}
       </div>
     </div>
   );
