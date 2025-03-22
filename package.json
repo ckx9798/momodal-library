@@ -1,6 +1,6 @@
 {
   "name": "momodal-library",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Accessible modal component for React.JS",
   "main": "./dist/momodal-library.cjs.js",
   "module": "./dist/momodal-library.es.js",
