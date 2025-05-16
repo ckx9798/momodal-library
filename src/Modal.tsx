@@ -1,6 +1,7 @@
 /** @format */
 
 import { ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -23,7 +24,7 @@ const Modal = ({
 }: ModalProps) => {
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div style={styles.overlay} onClick={onClose}>
       <div
         style={{
@@ -41,7 +42,8 @@ const Modal = ({
           </button>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
