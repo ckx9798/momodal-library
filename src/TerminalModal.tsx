@@ -2,6 +2,8 @@
 
 import React, { ReactNode, useEffect } from "react";
 
+import { createPortal } from "react-dom";
+
 interface TerminalModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -47,7 +49,7 @@ const TerminalModal = ({
   const headerBackground = white ? "#f0f0f0" : "#2c2c2c";
   const textColor = white ? "#333" : "#d4d4d4";
 
-  return (
+  return createPortal(
     <div style={styles.overlay} onClick={onClose}>
       <div
         style={{
@@ -92,7 +94,8 @@ const TerminalModal = ({
           <pre style={styles.console}>{children}</pre>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
