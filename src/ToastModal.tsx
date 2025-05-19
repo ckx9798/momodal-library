@@ -3,11 +3,19 @@
 import React, { useEffect, useState } from "react";
 
 type ToastType = "success" | "error" | "info" | "default";
+type ToastPosition =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";
 
 interface ToastModalProps {
   message: string;
   type?: ToastType;
   duration?: number;
+  position?: ToastPosition;
   onClose?: () => void;
 }
 
@@ -29,6 +37,7 @@ const ToastModal: React.FC<ToastModalProps> = ({
   message,
   type = "default",
   duration = 3000,
+  position = "top-center",
   onClose,
 }) => {
   const [visible, setVisible] = useState(true);
@@ -47,6 +56,7 @@ const ToastModal: React.FC<ToastModalProps> = ({
     <div
       style={{
         ...styles.toastContainer,
+        ...styles.toastPositionMap[position],
         backgroundColor: backgroundMap[type],
         ...(visible
           ? styles.animations[type]?.enter
@@ -64,11 +74,7 @@ const ToastModal: React.FC<ToastModalProps> = ({
 const styles = {
   toastContainer: {
     position: "fixed" as const,
-    top: "5%",
-    left: "50%",
-    transform: "translateX(-50%)",
-    color: "#333",
-    padding: "16px 28px",
+    padding: "12px 28px",
     borderRadius: "12px",
     boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
     zIndex: 1050,
@@ -77,8 +83,41 @@ const styles = {
     maxWidth: "80%",
     width: "fit-content",
     textAlign: "center" as const,
+    color: "#333",
     transition: "all 0.3s ease-in-out",
   },
+  toastPositionMap: {
+    "top-left": {
+      top: "5%",
+      left: "16px",
+      transform: "none",
+    },
+    "top-center": {
+      top: "5%",
+      left: "50%",
+      transform: "translateX(-50%)",
+    },
+    "top-right": {
+      top: "5%",
+      right: "16px",
+      transform: "none",
+    },
+    "bottom-left": {
+      bottom: "5%",
+      left: "16px",
+      transform: "none",
+    },
+    "bottom-center": {
+      bottom: "5%",
+      left: "50%",
+      transform: "translateX(-50%)",
+    },
+    "bottom-right": {
+      bottom: "5%",
+      right: "16px",
+      transform: "none",
+    },
+  } as Record<ToastPosition, React.CSSProperties>,
   emoji: {
     marginRight: "8px",
     fontSize: "18px",
@@ -131,6 +170,7 @@ const styles = {
   },
 };
 
+// 애니메이션 정의 추가
 const styleTag = document.createElement("style");
 styleTag.innerHTML = `
 @keyframes shake {
