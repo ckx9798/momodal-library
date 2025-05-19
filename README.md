@@ -2,22 +2,24 @@
 
 # 📦 momodal-library
 
-`momodal-library`는 간단하고 재사용 가능한 **Modal**,**TerminalModal**과
-**Button** 컴포넌트를 제공하는 React UI 라이브러리입니다.  
+`momodal-library`는 간단하고 재사용 가능한 모달을 제공하는 React UI 라이브러리입니다.
+기본 스타일의 **Modal**, 터미널 스타일의 **TerminalModal**과
+다양한 디자인의 **Button** 컴포넌트,
+토스트 알림을 알려주는 **ToastModal** 컴포넌트를 제공합니다
 타입스크립트로 작성되어 타입 안정성을 갖추고 있으며, 기본 스타일과 사용성을 고려하여 설계되었습니다.
 
 <br>
 
-## ✨ Features
+## 🎯 Features
 
-- ✅ **기본 Modal**: 심플하고 유연한 모달 컴포넌트
+- ✅ **Modal**: 기본 모달디자인의 심플하고 유연한 모달 컴포넌트
 - ✅ **TerminalModal**: 맥OS 스타일의 커스텀 디자인 모달
-- ✅ 다양한 스타일과 크기를 제공하는 Button (`primary`, `secondary`, `danger`)
-- ✅ 타입스크립트 지원
+- ✅ **Button**: 다양한 스타일과 크기를 제공하는 버튼 컴포넌트 (`primary`, `secondary`, `danger`)
+- ✅ **ToastModal**: 여러 서버 메시지를 처리 할 수 있는 Toast 알림 모달 ("success", "error", "info", "default")
 
 <br>
 
-## 📦 설치
+## 📍 설치
 
 ```js
 npm install momodal-library
@@ -26,9 +28,8 @@ yarn add momodal-library
 ```
 
 <br>
-<br>
 
-## 🚀 Modal 컴포넌트 사용법
+## 📂 Modal 컴포넌트 사용법
 
 ```js
 import { Modal } from "momodal-library";
@@ -49,8 +50,9 @@ import { Modal } from "momodal-library";
 <img src="https://i.imgur.com/Hz5FXlx.png" width="400"/>
 
 <br>
+<br>
 
-# 📌 TerminalModal 컴포넌트 사용법
+## 📌 TerminalModal 컴포넌트 사용법
 
 ```js
 import { TerminalModal } from "momodal-library";
@@ -75,7 +77,7 @@ import { TerminalModal } from "momodal-library";
 
 <br>
 
-# 🎨 Button 컴포넌트 사용법
+## 🎨 Button 컴포넌트 사용법
 
 ```js
 import { Button } from "momodal-library";
@@ -91,6 +93,37 @@ import { Button } from "momodal-library";
 ```
 
 <br>
+
+## 🌍 ToastModal 컴포넌트 사용법
+
+```js
+import { ToastModal } from "momodal-library";
+
+export default function App() {
+  const [showToast, setShowToast] = useState(false);
+
+  return (
+    <div>
+      <h1>📢 ToastModal 데모</h1>
+      <button onClick={() => setShowToast(true)}>토스트 띄우기</button>
+
+      {showToast && (
+        <ToastModal
+          message="저장되었습니다!"
+          type="success" // "success" | "error" | "info" | "default" 제공
+          duration={3000} // 닫히는 시간 조절
+          position="top-center"
+          //  `top-left` | `top-center` | `top-right` | `bottom-left` | `bottom-center` | `bottom-right` 제공
+          onClose={() => setShowToast(false)}
+        />
+      )}
+    </div>
+  );
+}
+```
+
+<img src="https://i.imgur.com/nPHRrmo.jpeg" width="400"/>
+
 <br>
 <br>
 
@@ -98,46 +131,113 @@ import { Button } from "momodal-library";
 
 ```js
 import React, { useState } from "react";
-import { Modal, Button } from "momodal-library";
+import { Modal, TerminalModal, Button, ToastModal } from "momodal-library";
 
-const App = () => {
+function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTerminalModalOpen, setIsTerminalModalOpen] = useState(false);
+  const [toast, setToast] = useState({
+    show: false,
+    type: "default",
+    message: "",
+  });
+
+  // 일반 모달 열기/닫기
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  // 터미널 모달 열기/닫기
+  const handleOpenTerminalModal = () => setIsTerminalModalOpen(true);
+  const handleCloseTerminalModal = () => setIsTerminalModalOpen(false);
+
+  // 버튼 클릭 시 토스트 띄우기
+  const handleButtonClick = (success) => {
+    setToast({
+      show: true,
+      type: success ? "success" : "error",
+      message: success ? "성공했습니다!" : "실패했습니다!",
+    });
+  };
+
+  // 토스트 닫기
+  const handleToastClose = () => setToast({ ...toast, show: false });
 
   return (
-    <div style={{ padding: 50 }}>
-      <Button label="모달 열기" onClick={() => setIsModalOpen(true)} />
+    <div>
+      <button onClick={handleOpenModal}>일반 모달 열기</button>
+      <button onClick={handleOpenTerminalModal}>터미널 모달 열기</button>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2>🎉 안녕하세요!</h2>
-        <p>momodal-libary로 만든 모달입니다</p>
-        <Button label="닫기" onClick={() => setIsModalOpen(false)} />
+      {/* 일반 모달 */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        width={500}
+        padding={24}
+        borderRadius={12}
+        showCloseButton={true}
+      >
+        <h2>일반 모달</h2>
+        <Button
+          label="성공"
+          onClick={() => handleButtonClick(true)}
+          color="primary"
+          size="md"
+          width={100}
+          height={40}
+        />
+        <Button
+          label="실패"
+          onClick={() => handleButtonClick(false)}
+          color="danger"
+          size="md"
+          width={100}
+          height={40}
+        />
       </Modal>
-    </div>
-  );
-};
-```
 
-```js
-import React, { useState } from "react";
-import { TerminalModal, Button } from "momodal-library";
-
-const App = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div style={{ padding: 50 }}>
-      <Button label="모달 열기" onClick={() => setIsOpen(true)} />
-
+      {/* 터미널 모달 */}
       <TerminalModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        headerTitle="🎉 TerminalModal"
+        isOpen={isTerminalModalOpen}
+        onClose={handleCloseTerminalModal}
+        width={500}
+        height={300}
+        borderRadius={12}
+        headerTitle="터미널 모달"
+        headerFontSize={16}
         white={true}
       >
-        <p>momodal-library로 만든 흰 배경 TerminalModal입니다!</p>
-        <Button label="닫기" onClick={() => setIsOpen(false)} />
+        <h2>터미널 모달</h2>
+        <Button
+          label="성공"
+          onClick={() => handleButtonClick(true)}
+          color="primary"
+          size="md"
+          width={100}
+          height={40}
+        />
+        <Button
+          label="실패"
+          onClick={() => handleButtonClick(false)}
+          color="danger"
+          size="md"
+          width={100}
+          height={40}
+        />
       </TerminalModal>
+
+      {/* 토스트 모달 */}
+      {toast.show && (
+        <ToastModal
+          message={toast.message}
+          type={toast.type}
+          duration={3000}
+          position="top-center"
+          onClose={handleToastClose}
+        />
+      )}
     </div>
   );
-};
+}
+
+export default App;
 ```

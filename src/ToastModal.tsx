@@ -79,12 +79,13 @@ const styles = {
     boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
     zIndex: 1050,
     fontSize: "15px",
-    fontWeight: 500,
+    fontWeight: 600,
     maxWidth: "80%",
     width: "fit-content",
     textAlign: "center" as const,
     color: "#333",
     transition: "all 0.3s ease-in-out",
+    font: "bold",
   },
   toastPositionMap: {
     "top-left": {
